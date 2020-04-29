@@ -1,3 +1,10 @@
+// Getting Json data
+function getJson(url){
+    d3.json(url, function(data){
+        return(data)
+    })
+};
+var jsonData = getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson")
 // Create a map object
 var myMap = L.map("map", {
     center: [33.31, -114.70],
