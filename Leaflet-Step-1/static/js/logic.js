@@ -1,14 +1,35 @@
 // Getting Json data
-function getJson(url){
-    d3.json(url, function(data){
-        return(data)
+var Events=[];
+d3.json(url,function(data)
+{
+
+    data.features.forEach(function (f){
+        var loc = f.geometry.coordinates;
+        var x = loc[0];
+        var y = loc[1];
+        var z = loc[2];
+        var p= f.properties;
+        var magnitude = p.mag;
+        var place = p.place;
+
+        var asDict={
+            X:x,
+            Y:y,
+            Z:z,
+            Mag:magnitude,
+            Place:place
+        };
+
+        Events.push(asDict);  
     })
-};
-var jsonData = getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson")
+});
+//var jsonData = getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson")
+
 // Create a map object
 var myMap = L.map("map", {
     center: [33.31, -114.70],
-    zoom: 4
+    zoom: 6
+    //access the data from var Events here
   });
   
   L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
